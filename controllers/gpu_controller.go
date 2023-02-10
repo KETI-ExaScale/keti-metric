@@ -18,8 +18,10 @@ package controllers
 
 import (
 	"context"
+	"time"
 
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/klog/v2"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
@@ -48,7 +50,25 @@ type GPUReconciler struct {
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.13.0/pkg/reconcile
 func (r *GPUReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
-
+	gpuMetricList := &ketimetricv1beta1.GPUList{}
+	err := r.List(ctx, gpuMetricList)
+	if err != nil {
+		klog.Errorln(err)
+	}
+	minTime := time.Now()
+	minObj := &ketimetricv1beta1.GPU{}
+	if len(gpuMetricList.Items) > 30 {
+		for _, metric := range gpuMetricList.Items {
+			if !minTime.Before(metric.CreationTimestamp.Time) {
+				minTime = metric.CreationTimestamp.Time
+				minObj = &metric
+			}
+		}
+		err = r.Delete(ctx, minObj, client.GracePeriodSeconds(1))
+		if err != nil {
+			klog.Errorln(err)
+		}
+	}
 	// TODO(user): your logic here
 
 	return ctrl.Result{}, nil
