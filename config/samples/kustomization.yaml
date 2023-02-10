@@ -1,0 +1,6 @@
+## Append samples you want in your CSV to this file as resources ##
+resources:
+- keti-metric_v1beta1_node.yaml
+- keti-metric_v1beta1_pod.yaml
+- keti-metric_v1beta1_gpu.yaml
+#+kubebuilder:scaffold:manifestskustomizesamples

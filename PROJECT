@@ -1,0 +1,37 @@
+domain: keti-exascale.keti-metric
+layout:
+- go.kubebuilder.io/v3
+plugins:
+  manifests.sdk.operatorframework.io/v2: {}
+  scorecard.sdk.operatorframework.io/v2: {}
+projectName: keti-metric
+repo: github.com/KETI-ExaScale/keti-metric
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: keti-exascale.keti-metric
+  group: keti-metric
+  kind: Node
+  path: github.com/KETI-ExaScale/keti-metric/api/v1beta1
+  version: v1beta1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: keti-exascale.keti-metric
+  group: keti-metric
+  kind: Pod
+  path: github.com/KETI-ExaScale/keti-metric/api/v1beta1
+  version: v1beta1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: keti-exascale.keti-metric
+  group: keti-metric
+  kind: GPU
+  path: github.com/KETI-ExaScale/keti-metric/api/v1beta1
+  version: v1beta1
+version: "3"

@@ -1,0 +1,12 @@
+apiVersion: keti-metric.keti-exascale.keti-metric/v1beta1
+kind: Pod
+metadata:
+  labels:
+    app.kubernetes.io/name: pod
+    app.kubernetes.io/instance: pod-sample
+    app.kubernetes.io/part-of: keti-metric
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: keti-metric
+  name: pod-sample
+spec:
+  # TODO(user): Add fields here
